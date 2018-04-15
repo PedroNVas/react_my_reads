@@ -2,9 +2,24 @@ import Divider from 'material-ui/Divider'
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import * as BooksApi from './BooksAPI'
-import Header from './components/Header/Header'
-import Shelf from './components/Shelf/Shelf'
-import SearchPage from './pages/SearchPage/SearchPage'
+import Header from './components/header/Header'
+import Shelf from './components/shelf/Shelf'
+import Search from './components/search/Search'
+
+const shelves = [
+  {
+    title: 'Currently Reading',
+    id: 'currentlyReading'
+  },
+  {
+    title: 'Want to Read',
+    id: 'wantToRead'
+  },
+  {
+    title: 'Read',
+    id: 'read'
+  }
+]
 
 class App extends Component {
 
@@ -53,21 +68,25 @@ class App extends Component {
       <div className="app">
         <Header/>
         <Route exact path="/" render={() => (
-          <div className="list-books">
-            <Shelf title="Currently Reading"
-                   books={books.filter(book => book.shelf === 'currentlyReading')}
-                   updateBook={this.updateBook}/>
-            <Divider inset={true} style={{backgroundColor: '#1d1508'}}/>
-            <Shelf title="Want to read" books={books.filter(book => book.shelf === 'wantToRead')}
-                   updateBook={this.updateBook}/>
-            <Divider inset={true} style={{backgroundColor: '#1d1508'}}/>
-            <Shelf title="Read" books={books.filter(book => book.shelf === 'read')}
-                   updateBook={this.updateBook}/>
+          <div>
+            {shelves.map(shelf => (
+              <div key={shelf.id}>
+                <Shelf
+                  title={shelf.title}
+                  books={books.filter(book => book.shelf === `${shelf.id}`)}
+                  updateBook={this.updateBook}
+                />
+                <Divider inset={true} style={{backgroundColor: '#1d1508'}}/>
+              </div>
+            ))}
           </div>
         )}>
         </Route>
         <Route path="/search" render={() => (
-          <SearchPage updateShelf={this.updateShelf} updateBook={this.updateBook}/>
+          <Search updateShelf={this.updateShelf} updateBook={this.updateBook}/>
+        )}/>
+        <Route path="/book/:id" render={() => (
+          <div>HERE</div>
         )}/>
       </div>
     )

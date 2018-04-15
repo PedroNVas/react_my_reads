@@ -1,0 +1,56 @@
+.tooltip-button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.45s;
+    background-color: #f0f7fc;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.tooltip-button:hover {
+    background-color: #d0d7dc;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip child */
+.tooltip .tooltipchild {
+    visibility: hidden;
+    width: 300px;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    background-color: white;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -150px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.8s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltipchild::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border: 5px solid transparent;
+    border-top-color: #555;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltipchild {
+    visibility: visible;
+    opacity: 1;
+}
