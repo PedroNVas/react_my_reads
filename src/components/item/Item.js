@@ -6,11 +6,13 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import '../../css/hover-min.css'
+
+import { bookImage } from '../../utils/utils'
 import './Item.css'
 
 const style = {
   paperStyle: {
-    width: 1000,
+    width: '80%',
     margin: '40px 100px',
     color: '#1d1202',
     display: 'block',
@@ -91,12 +93,6 @@ class Item extends Component {
   render () {
 
     const {book, updateBook} = this.props
-
-    const bookImage = (book) => {
-      return (book.imageLinks && book.imageLinks.thumbnail) ?
-        <img src={`${book.imageLinks.thumbnail}`} alt="Book Cover"/> :
-        null
-    }
 
     const bookDescription = (book) => {
       return book.description ? book.description : 'No description available'

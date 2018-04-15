@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import '../../css/hover-min.css'
+
+import { bookImage } from '../../utils/utils'
 import './Book.css'
 
 const style = {
@@ -93,7 +95,7 @@ class Book extends Component {
         <div style={{...style.paperStyle, opacity: isLoading ? 0.5 : 1}}>
           <Card style={style.cardStyle}>
             <CardMedia>
-              <img src={`${data.imageLinks.thumbnail}`} alt='Book Cover'/>
+              {bookImage(data)}
             </CardMedia>
           </Card>
         </div>
