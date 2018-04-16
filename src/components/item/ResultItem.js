@@ -1,9 +1,9 @@
 import { Divider } from 'material-ui'
+import CircularProgress from 'material-ui/CircularProgress'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import '../../css/hover-min.css'
-
 import InfoTemplate, { shelfMap } from '../infoTemplate/InfoTemplate'
 import './ResultItem.css'
 
@@ -22,11 +22,8 @@ const style = {
   divider: {
     backgroundColor: '#1d1508'
   },
-  p: {
-    display: 'inline',
-    fontSize: '23px',
-    position: "relative",
-    left: -170
+  progress: {
+    left: '50%'
   }
 }
 
@@ -37,21 +34,33 @@ class ResultItem extends Component {
     updateBook: PropTypes.func.isRequired
   }
 
+  state = {
+    isLoading: false
+  }
+
+  componentWillReceiveProps () {
+    this.setState({isLoading: false})
+  }
+
   render () {
 
     const {book, updateBook} = this.props
+
+    const {isLoading} = this.state
 
     const bottom = (
       <div>
         <Divider style={style.divider}/>
         <div style={style.selector}>
-          <p style={style.p}>Move to...</p>
           {Array.from(shelfMap).map(shelf => (
             <a
               className='hvr-bob'
               key={shelf[0]}
               style={style.selector.a}
-              onClick={() => updateBook(book, `${shelf[0]}`)}
+              onClick={() => {
+                this.setState({isLoading: true})
+                updateBook(book, `${shelf[0]}`)
+              }}
             >
               {shelf[1]}
             </a>
@@ -60,7 +69,26 @@ class ResultItem extends Component {
       </div>
     )
 
-    return <InfoTemplate book={book} child={bottom}/>
+    let content
+
+    if (isLoading) {
+      content = (
+        <div style={{opacity: 0.5}}>
+          <InfoTemplate book={book}
+                        child={
+                          <CircularProgress style={style.progress}
+                                            color="#dd8200"
+                                            size={60}
+                                            thickness={5}/>
+                        }
+          />
+        </div>
+      )
+    } else {
+      content = <InfoTemplate book={book} child={bottom}/>
+    }
+
+    return content
 
   }
 }
