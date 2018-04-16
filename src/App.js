@@ -2,9 +2,10 @@ import Divider from 'material-ui/Divider'
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import * as BooksApi from './BooksAPI'
+import BookInfo from './components/bookInfo/BookInfo'
 import Header from './components/header/Header'
+import SearchPage from './components/searchPage/SearchPage'
 import Shelf from './components/shelf/Shelf'
-import Search from './components/search/Search'
 
 const shelves = [
   {
@@ -43,18 +44,6 @@ class App extends Component {
     })
   }
 
-  // TODO - To be implemented to avoid unnecessary renders
-  // shouldComponentUpdate = (nextProps, nextState) => {
-  //
-  //   console.log("nextState", nextState)
-  //   console.log("nextProps", nextProps)
-  //   console.log(this.props.location)
-  //
-  //
-  //   // return this.state.books !== nextState.books;
-  //   return true
-  // }
-
   updateShelf = (book) => {
     const found = this.state.books.find(myBook => myBook.id === book.id)
     return found ? found.shelf : null
@@ -83,11 +72,9 @@ class App extends Component {
         )}>
         </Route>
         <Route path="/search" render={() => (
-          <Search updateShelf={this.updateShelf} updateBook={this.updateBook}/>
+          <SearchPage updateShelf={this.updateShelf} updateBook={this.updateBook}/>
         )}/>
-        <Route path="/book/:id" render={() => (
-          <div>HERE</div>
-        )}/>
+        <Route path="/book/:id" component={BookInfo}/>
       </div>
     )
   }

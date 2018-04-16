@@ -1,19 +1,22 @@
-import { Avatar, Divider } from 'material-ui'
-import Chip from 'material-ui/Chip'
-import Paper from 'material-ui/Paper'
+import { Avatar, Chip, Paper } from 'material-ui'
 import LibraryBooks from 'material-ui/svg-icons/av/library-books'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-
-import '../../css/hover-min.css'
-
 import { bookImage } from '../../utils/utils'
-import './Item.css'
+
+export const shelfMap = new Map(
+  [
+    ['currentlyReading', 'Currently Reading'],
+    ['wantToRead', 'Want to Read'],
+    ['read', 'Read'],
+    ['none', 'None'],
+  ]
+)
 
 const style = {
   paperStyle: {
     width: '80%',
-    margin: '40px 100px',
+    margin: "25px 8% 25px",
     color: '#1d1202',
     display: 'block',
     background: 'linear-gradient(to bottom, rgba(255,255,255,1), rgba(240,247,252,1))',
@@ -59,40 +62,18 @@ const style = {
       display: 'flex',
       flexWrap: 'wrap',
     }
-  },
-  selector: {
-    textAlign: 'center',
-    fontFamily: '\'Gamja Flower\', cursive',
-    color: '#1d1202',
-    margin: '15px 0px 5px 0px',
-    cursor: 'pointer',
-    a: {
-      margin: '0px 60px 0px',
-      fontSize: '20px'
-    }
-  },
-  divider: {
-    backgroundColor: '#1d1508'
   }
 }
 
-const shelfMap = new Map()
-
-shelfMap.set('currentlyReading', 'Currently Reading')
-shelfMap.set('wantToRead', 'Want to Read')
-shelfMap.set('read', 'Read')
-shelfMap.set('none', 'None')
-
-class Item extends Component {
+class InfoTemplate extends Component {
 
   static propTypes = {
-    book: PropTypes.object.isRequired,
-    updateBook: PropTypes.func.isRequired
+    book: PropTypes.object.isRequired
   }
 
   render () {
 
-    const {book, updateBook} = this.props
+    const {book} = this.props
 
     const bookDescription = (book) => {
       return book.description ? book.description : 'No description available'
@@ -129,9 +110,11 @@ class Item extends Component {
                 <b>Authors: </b> {book.authors.join(', ')}
               </Chip>
               }
+              {book.published &&
               <Chip style={style.chipInfo.details} labelStyle={style.chipInfo.details.labelStyle}>
                 <b>Publish Date: </b> {publishedDate(book)}
               </Chip>
+              }
               {book.pageCount &&
               <Chip style={style.chipInfo.details} labelStyle={style.chipInfo.details.labelStyle}>
                 <b>Page count: </b> {book.pageCount}
@@ -146,22 +129,10 @@ class Item extends Component {
             {bookDescription(book)}
           </div>
         </div>
-        <Divider style={style.divider}/>
-        <div style={style.selector}>
-          {Array.from(shelfMap).map(shelf => (
-            <a
-              className='hvr-bob'
-              key={shelf[0]}
-              style={style.selector.a}
-              onClick={() => updateBook(book, `${shelf[0]}`)}
-            >
-              {shelf[1]}
-            </a>
-          ))}
-        </div>
+        {this.props.child}
       </Paper>
     )
   }
 }
 
-export default Item
+export default InfoTemplate

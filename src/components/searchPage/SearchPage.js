@@ -7,8 +7,7 @@ import _ from 'underscore'
 import * as BooksApi from '../../BooksAPI'
 
 import '../../css/Fonts.css'
-import Item from '../item/Item'
-import './Search.css'
+import ResultItem from '../item/ResultItem'
 
 const style = {
   input: {
@@ -52,7 +51,7 @@ const style = {
   }
 }
 
-class Search extends Component {
+class SearchPage extends Component {
 
   static propTypes = {
     updateShelf: PropTypes.func.isRequired,
@@ -125,7 +124,7 @@ class Search extends Component {
         <div className='spinner'/>
         }
 
-        {isEmpty &&
+        {isEmpty && !isLoading &&
         <div style={style.emptyResult}>
           <p>No results found!</p>
           <div>
@@ -149,7 +148,7 @@ class Search extends Component {
             <ul style={style.ul}>
               {ownedBooks.map(book => (
                 <li key={book.id}>
-                  <Item book={book} updateBook={this.props.updateBook}/>
+                  <ResultItem book={book} updateBook={this.props.updateBook}/>
                 </li>
               ))}
             </ul>
@@ -169,7 +168,7 @@ class Search extends Component {
             <ul style={style.ul}>
               {newBooks.map(book => (
                 <li key={book.id}>
-                  <Item
+                  <ResultItem
                     book={book}
                     updateBook={this.props.updateBook}
                   />
@@ -186,4 +185,4 @@ class Search extends Component {
 
 }
 
-export default Search
+export default SearchPage
