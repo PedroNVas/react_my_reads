@@ -2,7 +2,7 @@ import AppBar from 'material-ui/AppBar'
 import HomeIcon from 'material-ui/svg-icons/action/book'
 import SearchIcon from 'material-ui/svg-icons/action/search'
 import { Tab, Tabs } from 'material-ui/Tabs'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 
 import '../../css/Fonts.css'
@@ -36,7 +36,7 @@ const style = {
   }
 }
 
-class Header extends Component {
+class Header extends PureComponent {
 
   render () {
 

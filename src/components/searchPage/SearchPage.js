@@ -70,7 +70,7 @@ class SearchPage extends Component {
   }
 
   handleInputChange = (e) => {
-    const value = e.target.value
+    const {value} = e.target
     this.setState({query: value})
     this.populateResults(value)
   }
